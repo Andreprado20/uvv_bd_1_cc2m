@@ -59,10 +59,10 @@ CREATE TABLE elmasri.funcionario (
                 ultimo_nome VARCHAR(15) NOT NULL,
                 nome_meio CHAR(1),
                 data_nascimento DATE,
-                endereco VARCHAR(30),
+                endereco VARCHAR(50),
                 sexo CHAR(1),
                 salario NUMERIC(10,2),
-                cpf_supervisor CHAR(11) NOT NULL,
+                cpf_supervisor CHAR(11),
                 numero_departamento INTEGER NOT NULL,
                 CONSTRAINT funcionario_pk PRIMARY KEY (cpf)
 );
