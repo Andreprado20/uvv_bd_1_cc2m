@@ -22,7 +22,10 @@ CREATE DATABASE uvv
     LC_COLLATE = 'en_US.UTF-8'
     LC_CTYPE = 'en_US.UTF-8'
     TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
+    ALLOW_CONNECTIONS = true;
+    
+ALTER USER Andre1
+SET SEARCH_PATH TO elmasri, 'Andre1', public;    
 
 COMMENT ON DATABASE uvv
     IS 'Servidor uvv onde estão criados os schemas e as tabelas';
@@ -67,7 +70,7 @@ CREATE TABLE elmasri.departamento (
 );
 
 
-CREATE UNIQUE INDEX elmasri.departamento_idx
+CREATE UNIQUE INDEX departamento_idx
  ON elmasri.departamento
  ( nome_departamento );
 
@@ -87,7 +90,7 @@ CREATE TABLE elmasri.projeto (
 );
 
 
-CREATE UNIQUE INDEX elmasri.projeto_idx
+CREATE UNIQUE INDEX projeto_idx
  ON elmasri.projeto
  ( nome_projeto );
 
@@ -156,7 +159,7 @@ REFERENCES elmasri.projeto (numero_projeto)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 
-insert into funcionario (cpf, primeiro_nome, ultimo_nome, nome_meio, data_nascimento, endereco, sexo, salario, cpf_supervisor, numero_departamento)
+insert into elmasri.funcionario (cpf, primeiro_nome, ultimo_nome, nome_meio, data_nascimento, endereco, sexo, salario, cpf_supervisor, numero_departamento)
 values 
 ('88866555576', 'Jorge', 'Brito', 'E', '1937-11-10', 'Rua do Horto, 35, São Paulo, SP', 'M', 55000.00, null, 1),
 ('33344555587', 'Fernando', 'Wong', 'F', '1955-12-08', 'Rua da Lapa, 34, São Paulo, SP', 'M', 40000.00, '88866555576', 5),
@@ -168,13 +171,13 @@ values
 ('98798798733', 'André', 'Pereira', 'V', '1969-03-29', 'Rua Timbira, 35, São Paulo, SP', 'M', 25000.00, '98765432168', 4);
 
 
-insert into departamento (numero_departamento, nome_departamento, cpf_gerente, data_inicio_gerente)
+insert into elmasri.departamento (numero_departamento, nome_departamento, cpf_gerente, data_inicio_gerente)
 values
 (5, 'Pesquisa', '33344555587', '1988-05-22'),
 (4, 'Administração', '98765432168', '1995-01-01'),
 (1, 'Matriz', '88866555576', '1981-06-19');
 
-insert into localizacoes_departamento (numero_departamento, local)
+insert into elmasri.localizacoes_departamento (numero_departamento, local)
 values
 (1, 'São Paulo'),
 (4, 'Mauá'),
@@ -182,7 +185,7 @@ values
 (5, 'Itu'),
 (5, 'São Paulo');	
 
-insert into projeto (numero_projeto, nome_projeto, local_projeto, numero_departamento)
+insert into elmasri.projeto (numero_projeto, nome_projeto, local_projeto, numero_departamento)
 values
 (1, 'ProdutoX', 'Santo André', 5),
 (2, 'ProdutoY', 'Itu', 5),
@@ -191,7 +194,7 @@ values
 (20, 'Reorganização', 'São Paulo', 1),
 (30, 'NovosBeneficios', 'Mauá', 4);
 
-insert into dependente (cpf_funcionario, nome_dependente, sexo, data_nascimento, parentesco)
+insert into elmasri.dependente (cpf_funcionario, nome_dependente, sexo, data_nascimento, parentesco)
 values 
 ('33344555587', 'Alicia', 'F', '1986-04-05', 'Filha'),
 ('33344555587', 'Tiago', 'M','1983-10-25', 'Filho'),
@@ -201,7 +204,7 @@ values
 ('12345678966', 'Alicia', 'F', '1988-12-30', 'Filha'),
 ('12345678966',	'Elizabeth', 'F', '1967-05-05', 'Esposa');
 
-insert into trabalha_em (cpf_funcionario, numero_projeto, horas)
+insert into elmasri.trabalha_em (cpf_funcionario, numero_projeto, horas)
 values
 ('12345678966',	1, 32.5),
 ('12345678966',	2, 7.5),
