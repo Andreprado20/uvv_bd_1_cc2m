@@ -1,6 +1,8 @@
 -- Role: "Andre1"
 -- DROP ROLE IF EXISTS "Andre1";
 
+/* Criação do usuário Andre1*/
+
 CREATE ROLE "Andre1" WITH
   LOGIN
   SUPERUSER
@@ -15,6 +17,8 @@ CREATE ROLE "Andre1" WITH
 
 -- DROP DATABASE IF EXISTS uvv;
 
+-- Criação do database uvv 
+
 CREATE DATABASE uvv
     WITH 
     OWNER = "Andre1"
@@ -23,24 +27,27 @@ CREATE DATABASE uvv
     LC_CTYPE = 'en_US.UTF-8'
     TABLESPACE = pg_default
     ALLOW_CONNECTIONS = true;
-    
-ALTER USER Andre1
-SET SEARCH_PATH TO elmasri, 'Andre1', public;    
 
-COMMENT ON DATABASE uvv
-    IS 'Servidor uvv onde estão criados os schemas e as tabelas';
-
-ALTER DATABASE uvv
-    SET "DateStyle" TO 'sql, dmy';
-   
-   
+ 
  -- SCHEMA: elmasri
 
 -- DROP SCHEMA IF EXISTS elmasri ;
 
 CREATE SCHEMA IF NOT EXISTS elmasri
     AUTHORIZATION "Andre1";
-   
+
+-- Definição do esquema padrão elmasri como padrão do user Andre1
+
+ALTER USER Andre1
+SET SEARCH_PATH TO elmasri, 'Andre1', public;    
+
+COMMENT ON DATABASE uvv
+    IS 'Servidor uvv onde estão criados os schemas e as tabelas';
+    
+-- Alteração da formatação de data para dd/mm/aaaa
+
+ALTER DATABASE uvv
+    SET "DateStyle" TO 'sql, dmy';
    
 -- Table: elmasri.departamento
 
@@ -60,6 +67,7 @@ CREATE TABLE elmasri.funcionario (
                 CONSTRAINT funcionario_pk PRIMARY KEY (cpf)
 );
 
+-- Criação da tabela Departamento 
 
 CREATE TABLE elmasri.departamento (
                 numero_departamento INTEGER NOT NULL,
@@ -69,7 +77,7 @@ CREATE TABLE elmasri.departamento (
                 CONSTRAINT departamento_pk PRIMARY KEY (numero_departamento)
 );
 
-
+-- Definição da 
 CREATE UNIQUE INDEX departamento_idx
  ON elmasri.departamento
  ( nome_departamento );
@@ -97,7 +105,7 @@ CREATE UNIQUE INDEX projeto_idx
 CREATE TABLE elmasri.trabalha_em (
                 cpf_funcionario CHAR(11) NOT NULL,
                 numero_projeto INTEGER NOT NULL,
-                horas NUMERIC(3,1) NOT NULL,
+                horas NUMERIC(3,1),
                 CONSTRAINT trabalha_em_pk PRIMARY KEY (cpf_funcionario, numero_projeto)
 );
 
@@ -116,48 +124,50 @@ CREATE TABLE elmasri.dependente (
 FOREIGN KEY (cpf_supervisor)
 REFERENCES elmasri.funcionario (cpf)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
 
 ALTER TABLE elmasri.dependente ADD CONSTRAINT funcionario_dependente_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES elmasri.funcionario (cpf)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
 
 
 ALTER TABLE elmasri.trabalha_em ADD CONSTRAINT funcionario_trabalha_em_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES elmasri.funcionario (cpf)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
 
 
 ALTER TABLE elmasri.departamento ADD CONSTRAINT funcionario_departamento_fk
 FOREIGN KEY (cpf_gerente)
 REFERENCES elmasri.funcionario (cpf)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
 
 
 ALTER TABLE elmasri.projeto ADD CONSTRAINT departamento_projeto_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES elmasri.departamento (numero_departamento)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
 
 
 ALTER TABLE elmasri.localizacoes_departamento ADD CONSTRAINT departamento_localizacoes_departamento_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES elmasri.departamento (numero_departamento)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
 
 
 ALTER TABLE elmasri.trabalha_em ADD CONSTRAINT projeto_trabalha_em_fk
 FOREIGN KEY (numero_projeto)
 REFERENCES elmasri.projeto (numero_projeto)
 ON DELETE NO ACTION
-ON UPDATE NO ACTION
+ON UPDATE NO ACTION;
+
+-- Definição dos valores de acordo com o projeto
 
 insert into elmasri.funcionario (cpf, primeiro_nome, ultimo_nome, nome_meio, data_nascimento, endereco, sexo, salario, cpf_supervisor, numero_departamento)
 values 
