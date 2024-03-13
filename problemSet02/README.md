@@ -14,7 +14,7 @@ As consultas são todas consultas de seleção, nas quais trabalha-se com alguns
 
 This repository contains a project of the **Database Design and Development I** discipline of the Computer Science course at the [Universidade Vila Velha](https://uvv.br/).
 
-The project, assigned by Mr. [Abrantes Araujo Silva Filho](https://github.com/abrantesasf), the course teacher in this semester, consists on presenting on a single script lots of SQL codes to execute some queries at the database built in the last problem set, [pSet01](https://github.com/Andreprado20/uvv_bd_1_cc2m/tree/main/pSet01).
+The project, assigned by [Mr. Abrantes Araujo Silva Filho](https://github.com/abrantesasf), the course teacher in this semester, consists on presenting on a single script lots of SQL codes to execute some queries at the database built in the last problem set, [pSet01](https://github.com/Andreprado20/uvv_bd_1_cc2m/tree/main/pSet01).
 
 Each part of the SQL code is a different query, executed to answer the questions assigned by the teacher. Each question is written on the code as a comment right above each query code.
 
